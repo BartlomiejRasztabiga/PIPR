@@ -1,0 +1,12 @@
+linux/arch/powerpc/sysdev/xics/icp-opal.c:91:	 * Here be dragons. The caller has asked to allow only IPI's and not
+linux/drivers/soc/fsl/qbman/qman.c:353:	 * rearrange this structure on a whim, there be dragons ...
+linux/drivers/clk/meson/gxbb.c:890:/* the mother of dragons gates */
+linux/drivers/block/paride/pd.c:703:/* WARNING:  here there may be dragons.  reset() applies to both drives,
+linux/drivers/gpu/drm/i915/selftests/i915_live_selftests.h:49:/* Here be dragons: keep last to run last! */
+linux/drivers/gpu/drm/i915/selftests/i915_gem.c:156:	/* Here be dragons! Note that with S3RST any S3 may become S4! */
+linux/drivers/gpu/drm/i915/selftests/i915_gem.c:191:	/* Here be dragons! */
+linux/drivers/gpu/drm/i915/i915_gem_evict.c:325:		 * Never show fear in the face of dragons!
+linux/drivers/gpu/drm/i915/gt/intel_gt.c:541:	 * This is just a security blanket to placate dragons.
+linux/drivers/gpu/drm/i915/gt/intel_lrc.c:2601:		 * We are flying near dragons again.
+linux/drivers/gpu/drm/i915/gt/intel_lrc.c:3582:	 * Beware ye of the dragons, this sequence is magic!
+linux/kernel/events/core.c:10230:		 * Beware, here be dragons!!
