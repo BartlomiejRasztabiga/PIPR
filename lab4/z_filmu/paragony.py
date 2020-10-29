@@ -1,12 +1,11 @@
 def split_price(price):
     price_zl = price // 100
     price_gr = price % 100
-    return (price_zl, price_gr)
+    return price_zl, price_gr
 
 
 def get_description(name, price):
-    price_zl, price_gr = split_price(price)
-    return f"Price of {name} is {price_zl}.{price_gr:02}"
+    return f"Price of {name} is {format_price(split_price(price))}"
 
 
 def print_description(name, price):
@@ -25,13 +24,13 @@ def get_total_price(receipt):
 
 
 def format_price(price):
-    price_zl, price_gr = price
-    return f"{price_zl},{price_gr:02}"
+    price_zl, price_gr = split_price(price)
+    return f"{price_zl}.{price_gr:02}"
 
 
 my_receipt = [
-    ("Bananas", 499)
-    ("Oranges", 803)
+    ("Bananas", 499),
+    ("Oranges", 803),
     ("Milk", 315)
 ]
 
