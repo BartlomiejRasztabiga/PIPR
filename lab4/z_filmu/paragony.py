@@ -58,6 +58,18 @@ def print_receipt(date, receipt):
     print(f"TOTAL: {formatted_value:>23}")
 
 
+def get_tax_group(product):
+    tax_group_A = {'Milk', 'Bread'}
+    tax_group_B = {'Bananas', 'Oranges'}
+
+    product_name, _ = product
+    if product in tax_group_A:
+        return 'A'
+    elif product in tax_group_B:
+        return 'B'
+    return 'E'
+
+
 my_receipt = [
     ("Bananas", 49999),
     ("Oranges", 803),
