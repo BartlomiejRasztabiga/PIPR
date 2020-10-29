@@ -14,4 +14,12 @@ def print_description(name, price):
     print(description)
 
 
-print_description('Apples', 201)
+def get_product():
+    product_name = input("Podaj nazwe produktu: ")
+    product_price = int(input("Podaj cene produktu w groszach: "))
+    return product_name, product_price
+
+
+product = get_product()
+name, price = product
+print_description(name, price)
