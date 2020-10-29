@@ -16,10 +16,24 @@ def print_description(name, price):
 
 def get_product():
     product_name = input("Podaj nazwe produktu: ")
-    product_price = int(input("Podaj cene produktu w groszach: "))
-    return product_name, product_price
+    product_price = input("Podaj cene produktu w groszach: ")
+    return product_name, int(product_price)
 
 
-product = get_product()
-name, price = product
-print_description(name, price)
+def get_total_price(receipt):
+    return sum(price for name, price in receipt)
+
+
+def format_price(price):
+    price_zl, price_gr = price
+    return f"{price_zl},{price_gr:02}"
+
+
+my_receipt = [
+    ("Bananas", 499)
+    ("Oranges", 803)
+    ("Milk", 315)
+]
+
+my_total_value = get_total_price(my_receipt)
+print(format_price(my_total_value))
