@@ -1,5 +1,6 @@
 from datetime import date
 
+
 def split_price(price):
     price_zl = price // 100
     price_gr = price % 100
