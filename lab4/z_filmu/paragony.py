@@ -41,6 +41,10 @@ def print_receipt(date, receipt):
     3. output line
     4. output summary
     """
+    if len(receipt) == 0:
+        print("Receipt is empty")
+        return
+
     print(date)
     current_position = 1
     for name, price in receipt:
