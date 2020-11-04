@@ -8,32 +8,25 @@ def is_int(x):
 
 
 def get_valid_k_input(list_length):
-    while True:
-        k = input('podaj k: ')
+    k = input('podaj k: ')
 
-        if not is_int(k):
-            print('podana wartość nie jest liczbą')
-            continue
+    if not is_int(k):
+        print('podana wartość nie jest liczbą')
+        return get_valid_k_input(list_length)
 
-        k_int = int(k)
+    k_int = int(k)
 
-        if k_int <= 0 or k_int > list_length:
-            print('podany indeks jest spoza dozwolonego zakresu')
-            continue
+    if k_int <= 0 or k_int > list_length:
+        print('podany indeks jest spoza dozwolonego zakresu')
+        return get_valid_k_input(list_length)
 
-        return k_int
+    return k_int
 
 
 def get_kth_element_reversed(lst):
-    def get_kth_element_reversed_recursive(lst, current_k=0):
-        if current_k == wanted_k:
-            return lst[-current_k]
-        return get_kth_element_reversed_recursive(lst, current_k + 1)
+    k = get_valid_k_input(len(lst))
 
-    list_length = len(lst)
-    wanted_k = get_valid_k_input(list_length)
-
-    return get_kth_element_reversed_recursive(lst)
+    return lst[-k]
 
 
 print(get_kth_element_reversed([1, 2, 3, 4, 5, 6, 7, 8, 9]))
