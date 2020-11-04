@@ -1,18 +1,37 @@
 def number_to_string_representation(num: int):
-    zero = "zero"
-    ones = [zero, "one", "two", "three", "four",
-            "five", "six", "seven", "eight", "nine"]
+    numbers_map = {
+        0: "zero",
+        1: "one",
+        2: "two",
+        3: "three",
+        4: "four",
+        5: "five",
+        6: "six",
+        7: "seven",
+        8: "eight",
+        9: "nine",
+        10: "ten",
+        11: "eleven",
+        12: "twelve",
+        13: "thirteen",
+        14: "fourteen",
+        15: "fifteen",
+        16: "sixteen",
+        17: "seventeen",
+        18: "eighteen",
+        19: "nineteen",
+    }
+
+    zero = numbers_map[0]
+    ones = list(map(lambda x: numbers_map[x], range(10)))
     tens = ["twenty", "thirty", "forty", "fifty"]
 
-    numbers = ones + ["ten", "eleven", "twelve", "thirteen", "fourteen",
-                      "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"]
+    numbers_map.update(enumerate((tens_place if ones_place == zero
+                                  else (f"{tens_place} {ones_place}")
+                                  for tens_place in tens
+                                  for ones_place in ones), len(numbers_map)))
 
-    # add all other numbers up to 59
-    numbers.extend(tens_place
-                   if ones_place == zero else (f"{tens_place} {ones_place}")
-                   for tens_place in tens for ones_place in ones)
-
-    return numbers[num]
+    return numbers_map[num]
 
 
 def get_hour_description(hour, minutes):
