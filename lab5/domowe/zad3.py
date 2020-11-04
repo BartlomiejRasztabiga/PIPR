@@ -14,12 +14,49 @@ def number_to_string_representation(num: int):
     return numbers[num]
 
 
+def get_hour_description(hour):
+    assert 0 <= hour <= 12
+
+    return number_to_string_representation(hour)
+
+
+def get_minutes_description(minutes):
+    assert 0 <= minutes <= 60
+
+    if minutes == 15:
+        return 'quarter'
+    elif minutes == 30:
+        return 'half'
+
+    return number_to_string_representation(minutes) + ' minutes'
+
+
+def get_postfix(minutes):
+    if minutes == 0:
+        return "o' clock"
+    elif minutes <= 30:
+        return "past"
+    return "to"
+
+
 def time_description(hour: int, minutes: int):
-    pass
+    hour_str = get_hour_description(hour if minutes <= 30 else hour + 1)
+    postfix = get_postfix(minutes)
+
+    if minutes == 0:
+        return f"{hour_str} {postfix}"
+
+    # TODO REFACTOR
+
+    minutes_str = get_minutes_description(
+        minutes if minutes <= 30 else 60 - minutes)
+
+    return f"{minutes_str} {postfix} {hour_str}"
 
 
-print(number_to_string_representation(0))
-# print(number_to_string_representation(15))
-# print(number_to_string_representation(60))
-# print(number_to_string_representation(32))
-# print(number_to_string_representation(17))
+print(time_description(8, 15))
+print(time_description(11, 13))
+print(time_description(12, 30))
+print(time_description(6, 37))
+print(time_description(3, 45))
+print(time_description(3, 0))
