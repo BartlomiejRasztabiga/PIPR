@@ -26,6 +26,7 @@ def number_to_string_representation(num: int):
     ones = list(map(lambda x: numbers_map[x], range(10)))
     tens = ["twenty", "thirty", "forty", "fifty"]
 
+    # add all other numbers up to 59
     numbers_map.update(enumerate((tens_place if ones_place == zero
                                   else (f"{tens_place} {ones_place}")
                                   for tens_place in tens
