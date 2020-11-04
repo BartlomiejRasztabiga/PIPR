@@ -17,15 +17,17 @@ def number_to_string_representation(num: int):
 def get_hour_description(hour, minutes):
     assert 0 <= hour <= 12
 
-    h = hour
     if minutes > 30:
-        h += 1
+        hour += 1
 
-    return number_to_string_representation(h)
+    return number_to_string_representation(hour)
 
 
 def get_minutes_description(minutes):
     assert 0 <= minutes <= 60
+
+    if minutes > 30:
+        minutes = 60 - minutes
 
     if minutes == 15:
         return 'quarter'
@@ -44,15 +46,18 @@ def get_connective(minutes):
     return "to"
 
 
+def is_full_hour(minutes):
+    return minutes == 0
+
+
 def time_description(hour: int, minutes: int):
     hour_str = get_hour_description(hour, minutes)
     connective = get_connective(minutes)
 
-    if minutes == 0:
+    if is_full_hour(minutes):
         return f"{hour_str} {connective}"
 
-    minutes_str = get_minutes_description(
-        minutes if minutes <= 30 else 60 - minutes)
+    minutes_str = get_minutes_description(minutes)
 
     return f"{minutes_str} {connective} {hour_str}"
 
