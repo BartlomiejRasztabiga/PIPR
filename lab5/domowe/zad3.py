@@ -7,8 +7,9 @@ def number_to_string_representation(num: int):
     numbers = ones + ["ten", "eleven", "twelve", "thirteen", "fourteen",
                       "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"]
 
+    # add all other numbers up to 59
     numbers.extend(tens_place
-                   if ones_place == zero else (tens_place + "-" + ones_place)
+                   if ones_place == zero else (f"{tens_place} {ones_place}")
                    for tens_place in tens for ones_place in ones)
 
     return numbers[num]
