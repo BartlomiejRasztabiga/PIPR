@@ -1,4 +1,6 @@
 def biggest_subseries(series, length):
+    if length > len(series):
+        return series
     return sorted(series, reverse=True)[:length]
 
 
