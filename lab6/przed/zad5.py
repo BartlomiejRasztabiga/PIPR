@@ -7,8 +7,7 @@ def get_average_of(collection):
 
 def count_elements_above_average(collection):
     collection_average = get_average_of(collection)
-    print([x for x in collection if x >= collection_average])
-    return len([x for x in collection if x >= collection_average])
+    return len([x for x in collection if x > collection_average])
 
 
 def count_elements_above_average_in_collections(collections):
@@ -18,8 +17,7 @@ def count_elements_above_average_in_collections(collections):
             res = count_elements_above_average(collection)
         except ZeroDivisionError:
             res = 'DZIELENIE PRZEZ ZERO'
-        except TypeError as e:
-            print(e)
+        except TypeError:
             res = 'ZŁA WARTOŚĆ'
 
         result.append(res)
