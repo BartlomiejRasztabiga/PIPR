@@ -1,5 +1,5 @@
 from zad2 import distance
-
+import pytest
 
 def test_distance_the_same():
     assert distance(10, (2, 3), (2, 3)) == 0
@@ -67,3 +67,7 @@ def test_distance_SW_SE():
 
 def test_distance_SW_SE_around():
     assert distance(14, (-13, -6), (5, -2)) == 15
+
+def test_distance_throw_exception():
+    with pytest.raises(ValueError):
+        distance(14, (-15, -6), (5, -2))
