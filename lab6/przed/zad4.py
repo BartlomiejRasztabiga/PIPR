@@ -1,6 +1,6 @@
-def encrypt_vingere(key, plaintext):
+def encrypt_vigenere(key, plaintext):
     pass
 
 
-def decrypt_vingere(key, ciphertext):
+def decrypt_vigenere(key, ciphertext):
     pass
