@@ -1,5 +1,5 @@
 import pytest
-from zad2 import encrypt_vigenere2, decrypt_vigenere2, to_ascii
+from zad2 import encrypt_vigenere2, decrypt_vigenere2, to_ascii, validate_key_length
 
 
 def test_encrypt_regular():
@@ -20,12 +20,22 @@ def test_encrypt_invalid_key():
 def test_to_ascii_regular():
     assert to_ascii('ABC') == [65, 66, 67]
 
+
 def test_to_ascii_non_char():
     assert to_ascii('#') == [35]
 
 
 def test_to_ascii_empty_str():
     assert to_ascii('') == []
+
+
+def test_validate_key_length_regular():
+    validate_key_length('key')
+
+
+def test_validate_key_length_empty():
+    with pytest.raises(ValueError):
+        validate_key_length('')
 
 
 def test_decrypt_regular():
