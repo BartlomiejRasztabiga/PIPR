@@ -57,12 +57,22 @@ def get_all_students_summary(students, max_lab_points):
 
 
 def get_all_students_avg_lab_score(students):
-    pass
+    sum_of_students_scores = 0
+    number_of_students = 0
+
+    for student in students:
+        student_lab_score = get_sum_of_lab(student)
+
+        if student_lab_score is not None:
+            sum_of_students_scores += student_lab_score
+            number_of_students += 1
+
+    return int(sum_of_students_scores / number_of_students)
 
 
 def print_all_students_summary(students, max_lab_points):
-    pass
+    print(get_all_students_summary(students, max_lab_points))
 
 
 def print_all_students_avg_lab_score(students):
-    pass
+    print(get_all_students_avg_lab_score(students))

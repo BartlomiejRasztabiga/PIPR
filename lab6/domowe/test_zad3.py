@@ -97,10 +97,10 @@ def test_get_all_students_summary_wrong_values():
 
 
 def test_get_all_students_avg_lab_score_regular():
-    assert get_all_students_summary(
-        [("Adam Abacki", [5, 10, 15]), ("Basia Babacka", [10, 20, 30]), ("Cecylia Cabacka", [1, 2, 3])], [10, 20, 30]) == 32
+    assert get_all_students_avg_lab_score(
+        [("Adam Abacki", [5, 10, 15]), ("Basia Babacka", [10, 20, 30]), ("Cecylia Cabacka", [1, 2, 3])]) == 32
 
 
 def test_get_all_students_avg_lab_score_wrong_values():
-    assert get_all_students_summary(
-        [("Adam Abacki", [5, '1o', 15]), ("Basia Babacka", [10, 20, 30]), ("Cecylia Cabacka", 55)], [10, 20, 30]) == 100
+    assert get_all_students_avg_lab_score(
+        [("Adam Abacki", [5, '1o', 15]), ("Basia Babacka", [10, 20, 30]), ("Cecylia Cabacka", 55)]) == 60
