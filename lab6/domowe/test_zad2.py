@@ -1,5 +1,11 @@
 import pytest
-from zad2 import encrypt_vigenere2, decrypt_vigenere2, to_ascii, validate_key_length
+from zad2 import (encrypt_vigenere2,
+                  decrypt_vigenere2,
+                  to_ascii,
+                  validate_key_length,
+                  validate_character_range,
+                  calculate_offset,
+                  get_nth_ascii_char)
 
 
 def test_encrypt_regular():
@@ -36,6 +42,43 @@ def test_validate_key_length_regular():
 def test_validate_key_length_empty():
     with pytest.raises(ValueError):
         validate_key_length('')
+
+
+def test_validate_character_range_regular1():
+    validate_character_range(ord('A'))
+
+
+def test_validate_character_range_regular2():
+    validate_character_range(ord('Z'))
+
+
+def test_validate_character_range_invalid_char():
+    with pytest.raises(ValueError):
+        validate_character_range(ord('a'))
+
+
+def test_calculate_offset_regular():
+    assert calculate_offset(ord('A'), ord('B')) == 1
+
+
+def test_calculate_offset_same_letter():
+    assert calculate_offset(ord('A'), ord('A')) == 0
+
+
+def test_calculate_offset_a_z():
+    assert calculate_offset(ord('A'), ord('Z')) == 25
+
+
+def test_get_nth_ascii_char_regular():
+    assert get_nth_ascii_char(0) == 'A'
+
+
+def test_get_nth_ascii_char_last():
+    assert get_nth_ascii_char(25) == 'Z'
+
+
+def test_get_nth_ascii_char_no_rollover():
+    assert get_nth_ascii_char(26) != 'A'
 
 
 def test_decrypt_regular():

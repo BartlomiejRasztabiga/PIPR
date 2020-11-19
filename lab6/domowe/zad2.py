@@ -7,9 +7,9 @@ def validate_key_length(key):
         raise ValueError("key cannot be empty)")
 
 
-def validate_character_range(char):
+def validate_character_range(char_ascii_code):
     VALID_ASCII_RANGE = range(ord('A'), ord('Z') + 1)
-    if char not in VALID_ASCII_RANGE:
+    if char_ascii_code not in VALID_ASCII_RANGE:
         raise ValueError("key character is out of valid range [A-Z]")
 
 
@@ -18,7 +18,7 @@ def calculate_offset(text_ascii, key_ascii):
     return (text_ascii + key_ascii) % ALPHABET_LENGTH
 
 
-def get_encrypted_char(ascii_offset):
+def get_nth_ascii_char(ascii_offset):
     ALPHABET_START = ord('A')
     return chr(ascii_offset + ALPHABET_START)
 
@@ -46,7 +46,7 @@ def encrypt_vigenere2(key, plaintext):
         validate_character_range(key_char_ascii_code)
 
         offset = calculate_offset(text_char_ascii_code, key_char_ascii_code)
-        encrypted += get_encrypted_char(offset)
+        encrypted += get_nth_ascii_char(offset)
 
     return encrypted
 
