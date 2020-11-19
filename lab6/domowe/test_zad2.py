@@ -4,7 +4,7 @@ from zad2 import (encrypt_vigenere2,
                   to_ascii,
                   validate_key_length,
                   validate_character_range,
-                  calculate_encryption_offset,
+                  calculate_offset,
                   get_nth_ascii_char)
 
 
@@ -57,16 +57,28 @@ def test_validate_character_range_invalid_char():
         validate_character_range(ord('a'))
 
 
-def test_calculate_offset_regular():
-    assert calculate_encryption_offset(ord('A'), ord('B')) == 1
+def test_calculate_encryption_offset_regular():
+    assert calculate_offset(ord('A'), ord('B'), encryption=True) == 1
 
 
-def test_calculate_offset_same_letter():
-    assert calculate_encryption_offset(ord('A'), ord('A')) == 0
+def test_calculate_encryption_offset_same_letter():
+    assert calculate_offset(ord('A'), ord('A'), encryption=True) == 0
 
 
-def test_calculate_offset_a_z():
-    assert calculate_encryption_offset(ord('A'), ord('Z')) == 25
+def test_calculate_encryption_offset_a_z():
+    assert calculate_offset(ord('A'), ord('Z'), encryption=True) == 25
+
+
+def test_calculate_decryption_offset_regular():
+    assert calculate_offset(ord('B'), ord('A'), encryption=False) == 1
+
+
+def test_calculate_decryption_offset_same_letter():
+    assert calculate_offset(ord('A'), ord('A'), encryption=False) == 0
+
+
+def test_calculate_decryption_offset_a_z():
+    assert calculate_offset(ord('Z'), ord('A'), encryption=False) == 25
 
 
 def test_get_nth_ascii_char_regular():

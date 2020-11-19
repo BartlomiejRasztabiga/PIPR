@@ -13,14 +13,15 @@ def validate_character_range(char_ascii_code):
         raise ValueError("key character is out of valid range [A-Z]")
 
 
-def calculate_encryption_offset(text_ascii, key_ascii):
+def calculate_offset(text_ascii, key_ascii, encryption):
+    """
+    If encryption=True, method will calculate offset for encryption
+    Else, will calculate offset for decryption
+    """
     ALPHABET_LENGTH = 26
+    if not encryption:
+        key_ascii *= -1
     return (text_ascii + key_ascii) % ALPHABET_LENGTH
-
-
-def calculate_decryption_offset(text_ascii, key_ascii):
-    ALPHABET_LENGTH = 26
-    return (text_ascii - key_ascii) % ALPHABET_LENGTH
 
 
 def get_nth_ascii_char(ascii_offset):
@@ -46,8 +47,8 @@ def get_encrypted_text(plaintext_ascii, key_ascii):
         key_char_ascii_code = key_ascii[i % key_length]
         validate_character_range(key_char_ascii_code)
 
-        offset = calculate_encryption_offset(
-            cipher_char_ascii_code, key_char_ascii_code)
+        offset = calculate_offset(
+            cipher_char_ascii_code, key_char_ascii_code, encryption=True)
         encrypted += get_nth_ascii_char(offset)
     return encrypted
 
@@ -79,8 +80,8 @@ def get_decrypted_text(ciphertext_ascii, key_ascii):
         key_char_ascii_code = key_ascii[i % key_length]
         validate_character_range(key_char_ascii_code)
 
-        offset = calculate_decryption_offset(
-            cipher_char_ascii_code, key_char_ascii_code)
+        offset = calculate_offset(
+            cipher_char_ascii_code, key_char_ascii_code, encryption=False)
         decrypted += get_nth_ascii_char(offset)
     return decrypted
 
