@@ -16,13 +16,17 @@ def get_lab_points(lab_score):
     return lab_score
 
 
-def get_student_lab_score(student_score):
-    return student_score[1]
+def get_student_lab_score(student):
+    return student[1]
 
 
-def get_sum_of_lab(student_score):
+def get_student_name(student):
+    return student[0]
+
+
+def get_sum_of_lab(student):
     try:
-        lab_points = get_lab_points(get_student_lab_score(student_score))
+        lab_points = get_lab_points(get_student_lab_score(student))
         return sum(lab_points)
     except:
         return None
@@ -32,31 +36,35 @@ def get_sum_of_max_lab_points(max_lab_points):
     return sum(max_lab_points)
 
 
-def get_student_avg_lab_percentage(student_score, max_lab_points):
-    sum_of_lab = get_sum_of_lab(student_score)
+def get_student_avg_lab_percentage(student, max_lab_points):
+    sum_of_lab = get_sum_of_lab(student)
     if sum_of_lab == None:
         return None
 
-    return sum_of_lab / get_sum_of_max_lab_points(max_lab_points) * 100
+    return int(sum_of_lab / get_sum_of_max_lab_points(max_lab_points) * 100)
 
 
-def get_single_student_summary(student_score, max_lab_points):
+def get_single_student_summary(student, max_lab_points):
+    sum_of_lab = get_sum_of_lab(student)
+    avg_lab_percentage = get_student_avg_lab_percentage(
+        student, max_lab_points)
+
+    return (get_student_name(student), sum_of_lab, avg_lab_percentage)
+
+
+def get_all_students_summary(students, max_lab_points):
     pass
 
 
-def get_all_students_summary(students_scores, max_lab_points):
+def get_all_students_avg_lab_score(students):
     pass
 
 
-def get_all_students_avg_lab_score(students_scores):
+def print_all_students_summary(students, max_lab_points):
     pass
 
 
-def print_all_students_summary(students_scores, max_lab_points):
-    pass
-
-
-def print_all_students_avg_lab_score(students_scores):
+def print_all_students_avg_lab_score(students):
     pass
 
 
