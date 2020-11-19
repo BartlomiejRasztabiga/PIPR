@@ -64,3 +64,23 @@ def test_get_student_avg_lab_percentage_wrong_value():
 def test_get_student_avg_lab_percentage_not_array():
     assert get_student_avg_lab_percentage(
         ("Adam Abacki", 55), [10, 20, 30]) == None
+
+
+def test_get_single_student_summary_regular1():
+    assert get_single_student_summary(
+        ("Adam Abacki", [5, 10, 15]), [10, 20, 30]) == ("Adam Abacki", 30, 50)
+
+
+def test_get_single_student_summary_regular2():
+    assert get_single_student_summary(
+        ("Cecylia Cabacka", [1, 2, 3]), [10, 20, 30]) == ("Adam Abacki", 30, 50)
+
+
+def test_get_single_student_summary_wrong_value():
+    assert get_single_student_summary(
+        ("Adam Abacki", [5, '1o', 15]), [10, 20, 30]) == ("Adam Abacki", None, None)
+
+
+def test_get_single_student_summary_not_array():
+    assert get_single_student_summary(
+        ("Cecylia Cabacka", 55, [10, 20, 30])) == ("Cecylia Cabacka", None, None)
