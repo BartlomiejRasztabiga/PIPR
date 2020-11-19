@@ -84,3 +84,13 @@ def test_get_single_student_summary_wrong_value():
 def test_get_single_student_summary_not_array():
     assert get_single_student_summary(
         ("Cecylia Cabacka", 55), [10, 20, 30]) == ("Cecylia Cabacka", None, None)
+
+
+def test_get_all_students_summary_regular():
+    assert get_all_students_summary(
+        [("Adam Abacki", [5, 10, 15]), ("Basia Babacka", [10, 20, 30]), ("Cecylia Cabacka", [1, 2, 3])], [10, 20, 30]) == [("Adam Abacki", 30, 50), ("Basia Babacka", 60, 100), ("Cecylia Cabacka", 6, 10)]
+
+
+def test_get_all_students_summary_wrong_values():
+    assert get_all_students_summary(
+        [("Adam Abacki", [5, '1o', 15]), ("Basia Babacka", [10, 20, 30]), ("Cecylia Cabacka", 55)], [10, 20, 30]) == [("Adam Abacki", None, None), ("Basia Babacka", 60, 100), ("Cecylia Cabacka", None, None)]

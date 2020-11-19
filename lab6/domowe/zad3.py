@@ -53,7 +53,7 @@ def get_single_student_summary(student, max_lab_points):
 
 
 def get_all_students_summary(students, max_lab_points):
-    pass
+    return list(map(lambda student: get_single_student_summary(student, max_lab_points), students))
 
 
 def get_all_students_avg_lab_score(students):
@@ -66,13 +66,3 @@ def print_all_students_summary(students, max_lab_points):
 
 def print_all_students_avg_lab_score(students):
     pass
-
-
-max_lab = [10, 20, 30]
-dane = [
-    ("Adam Abacki", [5, 10, 15]),
-    ("Basia Babacka", [10, 20, 30]),
-    ("Cecylia Cabacka", [1, 2, 3])
-]
-
-get_all_students_summary(dane, max_lab)
