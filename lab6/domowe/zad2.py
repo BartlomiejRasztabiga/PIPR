@@ -13,9 +13,14 @@ def validate_character_range(char_ascii_code):
         raise ValueError("key character is out of valid range [A-Z]")
 
 
-def calculate_offset(text_ascii, key_ascii):
+def calculate_encryption_offset(text_ascii, key_ascii):
     ALPHABET_LENGTH = 26
     return (text_ascii + key_ascii) % ALPHABET_LENGTH
+
+
+def calculate_decryption_offset(text_ascii, key_ascii):
+    ALPHABET_LENGTH = 26
+    return (text_ascii - key_ascii) % ALPHABET_LENGTH
 
 
 def get_nth_ascii_char(ascii_offset):
@@ -45,11 +50,36 @@ def encrypt_vigenere2(key, plaintext):
         key_char_ascii_code = key_ascii[i % key_length]
         validate_character_range(key_char_ascii_code)
 
-        offset = calculate_offset(text_char_ascii_code, key_char_ascii_code)
+        offset = calculate_encryption_offset(
+            text_char_ascii_code, key_char_ascii_code)
         encrypted += get_nth_ascii_char(offset)
 
     return encrypted
 
 
 def decrypt_vigenere2(key, ciphertext):
-    pass
+    validate_key_length(key)
+
+    key_ascii = to_ascii(key)
+    ciphertext_ascii = to_ascii(ciphertext)
+
+    decrypted = ''
+
+    SPACE_CHAR = ' '
+    SPACE_ASCII_CODE = ord(SPACE_CHAR)
+
+    key_length = len(key)
+    for i, cipher_char_ascii_code in enumerate(ciphertext_ascii):
+        if cipher_char_ascii_code == SPACE_ASCII_CODE:
+            decrypted += SPACE_CHAR
+            continue
+
+        validate_character_range(cipher_char_ascii_code)
+
+        key_char_ascii_code = key_ascii[i % key_length]
+        validate_character_range(key_char_ascii_code)
+
+        offset = calculate_decryption_offset(
+            cipher_char_ascii_code, key_char_ascii_code)
+        decrypted += get_nth_ascii_char(offset)
+    return decrypted

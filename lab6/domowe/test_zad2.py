@@ -4,7 +4,7 @@ from zad2 import (encrypt_vigenere2,
                   to_ascii,
                   validate_key_length,
                   validate_character_range,
-                  calculate_offset,
+                  calculate_encryption_offset,
                   get_nth_ascii_char)
 
 
@@ -58,15 +58,15 @@ def test_validate_character_range_invalid_char():
 
 
 def test_calculate_offset_regular():
-    assert calculate_offset(ord('A'), ord('B')) == 1
+    assert calculate_encryption_offset(ord('A'), ord('B')) == 1
 
 
 def test_calculate_offset_same_letter():
-    assert calculate_offset(ord('A'), ord('A')) == 0
+    assert calculate_encryption_offset(ord('A'), ord('A')) == 0
 
 
 def test_calculate_offset_a_z():
-    assert calculate_offset(ord('A'), ord('Z')) == 25
+    assert calculate_encryption_offset(ord('A'), ord('Z')) == 25
 
 
 def test_get_nth_ascii_char_regular():
@@ -86,6 +86,11 @@ def test_decrypt_regular():
                              'GH XNWL UBRUCN HTJWL RXOCL') == 'TO JEST BARDZO TAJNY TEKST'
 
 
-def test_decrypt_wrong_key():
+def test_decrypt_invalid_ciphertext():
     with pytest.raises(ValueError):
-        decrypt_vigenere2('ZLY KLUCZ', 'GH XNWL UBRUCN HTJWL RXOCL')
+        decrypt_vigenere2('KEY', 'GH X$WL UBRUCN HTJWL RXOCL')
+
+
+def test_decrypt_invalid_key():
+    with pytest.raises(ValueError):
+        decrypt_vigenere2('KEY%#', 'GH XNWL UBRUCN HTJWL RXOCL')
