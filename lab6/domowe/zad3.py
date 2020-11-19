@@ -28,8 +28,16 @@ def get_sum_of_lab(student_score):
         return None
 
 
+def get_sum_of_max_lab_points(max_lab_points):
+    return sum(max_lab_points)
+
+
 def get_student_avg_lab_percentage(student_score, max_lab_points):
-    pass
+    sum_of_lab = get_sum_of_lab(student_score)
+    if sum_of_lab == None:
+        return None
+
+    return sum_of_lab / get_sum_of_max_lab_points(max_lab_points) * 100
 
 
 def get_single_student_summary(student_score, max_lab_points):
