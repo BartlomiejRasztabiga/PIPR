@@ -1,5 +1,22 @@
+def validate_lab_score(lab_score):
+    if not isinstance(lab_score, list):
+        raise ValueError('lab_score is not a list!')
+
+
+def validate_single_lab_score(score):
+    if not isinstance(score, int) and not isinstance(score, float):
+        raise ValueError('score in lab_score is not a number!')
+
+
 def get_lab_points(lab_score):
-    pass
+    lab_points = lab_score
+    try:
+        validate_lab_score(lab_score)
+        for score in lab_score:
+            validate_single_lab_score(score)
+    except:
+        lab_points = None
+    return lab_points
 
 
 def get_sum_of_lab(student_score):
