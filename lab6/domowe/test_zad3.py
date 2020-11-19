@@ -16,12 +16,51 @@ def test_get_lab_points_empty():
 
 
 def test_get_lab_points_wrong_value():
-    assert get_lab_points([5, '1o', 15]) is None
+    with pytest.raises(ValueError):
+        get_lab_points([5, '1o', 15])
 
 
 def test_get_lab_point_not_array():
-    assert get_lab_points(55) is None
+    with pytest.raises(ValueError):
+        get_lab_points(55)
 
 
 def test_get_lab_point_none():
-    assert get_lab_points(None) is None
+    with pytest.raises(ValueError):
+        get_lab_points(None)
+
+
+def test_get_sum_of_lab_regular1():
+    assert get_sum_of_lab(("Adam Abacki", [5, 10, 15])) == 30
+
+
+def test_get_sum_of_lab_regular2():
+    assert get_sum_of_lab(("Cecylia Cabacka", [1, 2, 3])) == 6
+
+
+def test_get_sum_of_lab_wrong_value():
+    assert get_sum_of_lab(("Adam Abacki", [5, '1o', 15])) == None
+
+
+def test_get_sum_of_lab_not_array():
+    assert get_sum_of_lab(("Cecylia Cabacka", 55)) == None
+
+
+def test_get_student_avg_lab_percentage_regular1():
+    assert get_student_avg_lab_percentage(
+        ("Adam Abacki", [5, 10, 15]), [10, 20, 30]) == 50
+
+
+def test_get_student_avg_lab_percentage_regular2():
+    assert get_student_avg_lab_percentage(
+        ("Cecylia Cabacka", [1, 2, 3]), [10, 20, 30]) == 10
+
+
+def test_get_student_avg_lab_percentage_wrong_value():
+    assert get_student_avg_lab_percentage(
+        ("Adam Abacki", [5, '1o', 15]), [10, 20, 30]) == None
+
+
+def test_get_student_avg_lab_percentage_not_array():
+    assert get_student_avg_lab_percentage(
+        ("Adam Abacki", 55), [10, 20, 30]) == None

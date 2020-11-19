@@ -9,18 +9,23 @@ def validate_single_lab_score(score):
 
 
 def get_lab_points(lab_score):
-    lab_points = lab_score
-    try:
-        validate_lab_score(lab_score)
-        for score in lab_score:
-            validate_single_lab_score(score)
-    except:
-        lab_points = None
-    return lab_points
+    validate_lab_score(lab_score)
+    for score in lab_score:
+        validate_single_lab_score(score)
+
+    return lab_score
+
+
+def get_student_lab_score(student_score):
+    return student_score[1]
 
 
 def get_sum_of_lab(student_score):
-    pass
+    try:
+        lab_points = get_lab_points(get_student_lab_score(student_score))
+        return sum(lab_points)
+    except:
+        return None
 
 
 def get_student_avg_lab_percentage(student_score, max_lab_points):
