@@ -28,47 +28,47 @@ def get_nth_ascii_char(ascii_offset):
     return chr(ascii_offset + ALPHABET_START)
 
 
+def get_encrypted_text(plaintext_ascii, key_ascii):
+    key_length = len(key_ascii)
+
+    SPACE_CHAR = ' '
+    SPACE_ASCII_CODE = ord(SPACE_CHAR)
+
+    encrypted = ''
+
+    for i, cipher_char_ascii_code in enumerate(plaintext_ascii):
+        if cipher_char_ascii_code == SPACE_ASCII_CODE:
+            encrypted += SPACE_CHAR
+            continue
+
+        validate_character_range(cipher_char_ascii_code)
+
+        key_char_ascii_code = key_ascii[i % key_length]
+        validate_character_range(key_char_ascii_code)
+
+        offset = calculate_encryption_offset(
+            cipher_char_ascii_code, key_char_ascii_code)
+        encrypted += get_nth_ascii_char(offset)
+    return encrypted
+
+
 def encrypt_vigenere2(key, plaintext):
     validate_key_length(key)
 
     key_ascii = to_ascii(key)
     plaintext_ascii = to_ascii(plaintext)
 
-    encrypted = ''
+    return get_encrypted_text(plaintext_ascii, key_ascii)
+
+
+def get_decrypted_text(ciphertext_ascii, key_ascii):
+    key_length = len(key_ascii)
 
     SPACE_CHAR = ' '
     SPACE_ASCII_CODE = ord(SPACE_CHAR)
-
-    key_length = len(key)
-    for i, text_char_ascii_code in enumerate(plaintext_ascii):
-        if text_char_ascii_code == SPACE_ASCII_CODE:
-            encrypted += SPACE_CHAR
-            continue
-
-        validate_character_range(text_char_ascii_code)
-
-        key_char_ascii_code = key_ascii[i % key_length]
-        validate_character_range(key_char_ascii_code)
-
-        offset = calculate_encryption_offset(
-            text_char_ascii_code, key_char_ascii_code)
-        encrypted += get_nth_ascii_char(offset)
-
-    return encrypted
-
-
-def decrypt_vigenere2(key, ciphertext):
-    validate_key_length(key)
-
-    key_ascii = to_ascii(key)
-    ciphertext_ascii = to_ascii(ciphertext)
 
     decrypted = ''
 
-    SPACE_CHAR = ' '
-    SPACE_ASCII_CODE = ord(SPACE_CHAR)
-
-    key_length = len(key)
     for i, cipher_char_ascii_code in enumerate(ciphertext_ascii):
         if cipher_char_ascii_code == SPACE_ASCII_CODE:
             decrypted += SPACE_CHAR
@@ -83,3 +83,12 @@ def decrypt_vigenere2(key, ciphertext):
             cipher_char_ascii_code, key_char_ascii_code)
         decrypted += get_nth_ascii_char(offset)
     return decrypted
+
+
+def decrypt_vigenere2(key, ciphertext):
+    validate_key_length(key)
+
+    key_ascii = to_ascii(key)
+    ciphertext_ascii = to_ascii(ciphertext)
+
+    return get_decrypted_text(ciphertext_ascii, key_ascii)
