@@ -39,11 +39,11 @@ def test_get_sum_of_lab_regular2():
 
 
 def test_get_sum_of_lab_wrong_value():
-    assert get_sum_of_lab(("Adam Abacki", [5, '1o', 15])) == None
+    assert get_sum_of_lab(("Adam Abacki", [5, '1o', 15])) is None
 
 
 def test_get_sum_of_lab_not_array():
-    assert get_sum_of_lab(("Cecylia Cabacka", 55)) == None
+    assert get_sum_of_lab(("Cecylia Cabacka", 55)) is None
 
 
 def test_get_student_avg_lab_percentage_regular1():
@@ -56,51 +56,80 @@ def test_get_student_avg_lab_percentage_regular2():
         ("Cecylia Cabacka", [1, 2, 3]), [10, 20, 30]) == 10
 
 
+def test_get_student_avg_lab_percentage_too_short():
+    assert get_student_avg_lab_percentage(
+        ("Cecylia Cabacka", [1, 2]), [10, 20, 30]) == 5
+
+
 def test_get_student_avg_lab_percentage_wrong_value():
     assert get_student_avg_lab_percentage(
-        ("Adam Abacki", [5, '1o', 15]), [10, 20, 30]) == None
+        ("Adam Abacki", [5, '1o', 15]), [10, 20, 30]) is None
 
 
 def test_get_student_avg_lab_percentage_not_array():
     assert get_student_avg_lab_percentage(
-        ("Adam Abacki", 55), [10, 20, 30]) == None
+        ("Adam Abacki", 55), [10, 20, 30]) is None
 
 
 def test_get_single_student_summary_regular1():
-    assert get_single_student_summary(
-        ("Adam Abacki", [5, 10, 15]), [10, 20, 30]) == ("Adam Abacki", 30, 50)
+    result = get_single_student_summary(
+        ("Adam Abacki", [5, 10, 15]), [10, 20, 30])
+    assert result == ("Adam Abacki", 30, 50)
 
 
 def test_get_single_student_summary_regular2():
-    assert get_single_student_summary(
-        ("Cecylia Cabacka", [1, 2, 3]), [10, 20, 30]) == ("Cecylia Cabacka", 6, 10)
+    result = get_single_student_summary(
+        ("Cecylia Cabacka", [1, 2, 3]), [10, 20, 30])
+    assert result == ("Cecylia Cabacka", 6, 10)
 
 
 def test_get_single_student_summary_wrong_value():
-    assert get_single_student_summary(
-        ("Adam Abacki", [5, '1o', 15]), [10, 20, 30]) == ("Adam Abacki", None, None)
+    result = get_single_student_summary(
+        ("Adam Abacki", [5, '1o', 15]), [10, 20, 30])
+    assert result == ("Adam Abacki", None, None)
 
 
 def test_get_single_student_summary_not_array():
-    assert get_single_student_summary(
-        ("Cecylia Cabacka", 55), [10, 20, 30]) == ("Cecylia Cabacka", None, None)
+    result = get_single_student_summary(
+        ("Cecylia Cabacka", 55), [10, 20, 30])
+    assert result == ("Cecylia Cabacka", None, None)
 
 
 def test_get_all_students_summary_regular():
-    assert get_all_students_summary(
-        [("Adam Abacki", [5, 10, 15]), ("Basia Babacka", [10, 20, 30]), ("Cecylia Cabacka", [1, 2, 3])], [10, 20, 30]) == [("Adam Abacki", 30, 50), ("Basia Babacka", 60, 100), ("Cecylia Cabacka", 6, 10)]
+    assert get_all_students_summary([
+        ("Adam Abacki", [5, 10, 15]),
+        ("Basia Babacka", [10, 20, 30]),
+        ("Cecylia Cabacka", [1, 2, 3])
+    ], [10, 20, 30]) == [
+        ("Adam Abacki", 30, 50),
+        ("Basia Babacka", 60, 100),
+        ("Cecylia Cabacka", 6, 10)
+    ]
 
 
 def test_get_all_students_summary_wrong_values():
-    assert get_all_students_summary(
-        [("Adam Abacki", [5, '1o', 15]), ("Basia Babacka", [10, 20, 30]), ("Cecylia Cabacka", 55)], [10, 20, 30]) == [("Adam Abacki", None, None), ("Basia Babacka", 60, 100), ("Cecylia Cabacka", None, None)]
+    assert get_all_students_summary([
+        ("Adam Abacki", [5, '1o', 15]),
+        ("Basia Babacka", [10, 20, 30]),
+        ("Cecylia Cabacka", 55)
+    ], [10, 20, 30]) == [
+        ("Adam Abacki", None, None),
+        ("Basia Babacka", 60, 100),
+        ("Cecylia Cabacka", None, None)
+    ]
 
 
 def test_get_all_students_avg_lab_score_regular():
-    assert get_all_students_avg_lab_score(
-        [("Adam Abacki", [5, 10, 15]), ("Basia Babacka", [10, 20, 30]), ("Cecylia Cabacka", [1, 2, 3])]) == 32
+    assert get_all_students_avg_lab_score([
+        ("Adam Abacki", [5, 10, 15]),
+        ("Basia Babacka", [10, 20, 30]),
+        ("Cecylia Cabacka", [1, 2, 3])
+    ]) == 32
 
 
 def test_get_all_students_avg_lab_score_wrong_values():
-    assert get_all_students_avg_lab_score(
-        [("Adam Abacki", [5, '1o', 15]), ("Basia Babacka", [10, 20, 30]), ("Cecylia Cabacka", 55)]) == 60
+    assert get_all_students_avg_lab_score([
+        ("Adam Abacki", [5, '1o', 15]),
+        ("Basia Babacka", [10, 20, 30]),
+        ("Cecylia Cabacka", 55)
+    ]) == 60

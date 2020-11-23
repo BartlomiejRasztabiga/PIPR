@@ -54,11 +54,13 @@ def get_encrypted_decrypted_text(text_ascii, key_ascii, encryption):
 
 
 def get_encrypted_text(plaintext_ascii, key_ascii):
-    return get_encrypted_decrypted_text(plaintext_ascii, key_ascii, encryption=True)
+    return get_encrypted_decrypted_text(
+        plaintext_ascii, key_ascii, encryption=True)
 
 
 def get_decrypted_text(ciphertext_ascii, key_ascii):
-    return get_encrypted_decrypted_text(ciphertext_ascii, key_ascii, encryption=False)
+    return get_encrypted_decrypted_text(
+        ciphertext_ascii, key_ascii, encryption=False)
 
 
 def encrypt_vigenere2(key, plaintext):

@@ -9,8 +9,9 @@ from zad2 import (encrypt_vigenere2,
 
 
 def test_encrypt_regular():
-    assert encrypt_vigenere2('NT OJES TBARDZ OTAJN YTEKS',
-                             'TO JEST BARDZO TAJNY TEKST') == 'GH XNWL UBRUCN HTJWL RXOCL'
+    result = encrypt_vigenere2('NT OJES TBARDZ OTAJN YTEKS',
+                               'TO JEST BARDZO TAJNY TEKST')
+    assert result == 'GH XNWL UBRUCN HTJWL RXOCL'
 
 
 def test_encrypt_invalid_plaintext():
@@ -94,8 +95,9 @@ def test_get_nth_ascii_char_no_rollover():
 
 
 def test_decrypt_regular():
-    assert decrypt_vigenere2('NT OJES TBARDZ OTAJN YTEKS',
-                             'GH XNWL UBRUCN HTJWL RXOCL') == 'TO JEST BARDZO TAJNY TEKST'
+    result = decrypt_vigenere2('NT OJES TBARDZ OTAJN YTEKS',
+                               'GH XNWL UBRUCN HTJWL RXOCL')
+    assert result == 'TO JEST BARDZO TAJNY TEKST'
 
 
 def test_decrypt_invalid_ciphertext():

@@ -28,7 +28,7 @@ def get_sum_of_lab(student):
     try:
         lab_points = get_lab_points(get_student_lab_score(student))
         return sum(lab_points)
-    except:
+    except ValueError:
         return None
 
 
@@ -38,7 +38,7 @@ def get_sum_of_max_lab_points(max_lab_points):
 
 def get_student_avg_lab_percentage(student, max_lab_points):
     sum_of_lab = get_sum_of_lab(student)
-    if sum_of_lab == None:
+    if sum_of_lab is None:
         return None
 
     return int(sum_of_lab / get_sum_of_max_lab_points(max_lab_points) * 100)
