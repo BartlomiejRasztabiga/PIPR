@@ -6,44 +6,47 @@ from zad3 import (get_lab_points,
                   get_all_students_summary,
                   get_all_students_avg_lab_score)
 
+max_lab_points = [10, 20, 30]
+
 
 def test_get_lab_points_regular():
-    assert get_lab_points([5, 10, 15]) == [5, 10, 15]
+    assert get_lab_points([5, 10, 15], max_lab_points) == [5, 10, 15]
 
 
 def test_get_lab_points_empty():
-    assert get_lab_points([]) == []
+    assert get_lab_points([], max_lab_points) == []
 
 
 def test_get_lab_points_wrong_value():
     with pytest.raises(ValueError):
-        get_lab_points([5, '1o', 15])
+        get_lab_points([5, '1o', 15], max_lab_points)
 
 
 def test_get_lab_point_not_array():
     with pytest.raises(ValueError):
-        get_lab_points(55)
+        get_lab_points(55, max_lab_points)
 
 
 def test_get_lab_point_none():
     with pytest.raises(ValueError):
-        get_lab_points(None)
+        get_lab_points(None, max_lab_points)
 
 
 def test_get_sum_of_lab_regular1():
-    assert get_sum_of_lab(("Adam Abacki", [5, 10, 15])) == 30
+    assert get_sum_of_lab(("Adam Abacki", [5, 10, 15]), max_lab_points) == 30
 
 
 def test_get_sum_of_lab_regular2():
-    assert get_sum_of_lab(("Cecylia Cabacka", [1, 2, 3])) == 6
+    assert get_sum_of_lab(("Cecylia Cabacka", [1, 2, 3]), max_lab_points) == 6
 
 
 def test_get_sum_of_lab_wrong_value():
-    assert get_sum_of_lab(("Adam Abacki", [5, '1o', 15])) is None
+    assert get_sum_of_lab(
+        ("Adam Abacki", [5, '1o', 15]), max_lab_points) is None
 
 
 def test_get_sum_of_lab_not_array():
-    assert get_sum_of_lab(("Cecylia Cabacka", 55)) is None
+    assert get_sum_of_lab(("Cecylia Cabacka", 55), max_lab_points) is None
 
 
 def test_get_student_avg_lab_percentage_regular1():
@@ -124,7 +127,7 @@ def test_get_all_students_avg_lab_score_regular():
         ("Adam Abacki", [5, 10, 15]),
         ("Basia Babacka", [10, 20, 30]),
         ("Cecylia Cabacka", [1, 2, 3])
-    ]) == 32
+    ], max_lab_points) == 32
 
 
 def test_get_all_students_avg_lab_score_wrong_values():
@@ -132,4 +135,4 @@ def test_get_all_students_avg_lab_score_wrong_values():
         ("Adam Abacki", [5, '1o', 15]),
         ("Basia Babacka", [10, 20, 30]),
         ("Cecylia Cabacka", 55)
-    ]) == 60
+    ], max_lab_points) == 60
