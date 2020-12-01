@@ -13,11 +13,15 @@ class Time:
     hours: int
     minutes: int
 
-    def __post_init__(self):
-        if self.hours > 24 or self.hours < 0:
+    @staticmethod
+    def validate_time(time):
+        if time.hours > 24 or time.hours < 0:
             raise InvalidTimeException("Hours are in invalid range")
-        elif self.minutes > 60 or self.minutes < 0:
+        elif time.minutes > 60 or time.minutes < 0:
             raise InvalidTimeException("Minutes are in invalid range")
+
+    def __post_init__(self):
+        self.validate_time(self)
 
     def __add__(self, other):
         temp = Time(self.hours, self.minutes)
@@ -27,6 +31,9 @@ class Time:
         if temp.minutes >= 60:
             temp.hours += temp.minutes // 60
             temp.minutes -= 60
+
+        self.validate_time(temp)
+
         return temp
 
     def __radd__(self, other):
@@ -100,8 +107,5 @@ class Route:
             self._get_route_start_end_times_line(start_time),
             *self._get_route_points_descriptions(start_time)
         ]
-
-        for row in timetable:
-            print(row)
 
         return timetable
