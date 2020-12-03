@@ -311,7 +311,7 @@ def test_hydra_regenerate_health_above_base():
 def test_dragonhydra_take_damage_hit(monkeypatch):
     def returnOne(f, t):
         return 1
-    monkeypatch.setattr('classes.randint', returnOne)
+    monkeypatch.setattr('classes_base.randint', returnOne)
     enemy = DragonHydra('dragon', 40, 3)
     assert enemy.health() == 40
     assert enemy.take_damage(10)
