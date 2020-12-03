@@ -166,6 +166,25 @@ class Hydra(Enemy):
             return
         self._health = min(self._base_health, self._health + points)
 
+    def take_damage(self, damage):
+        """
+        Reduces health of enemy by damage
+        """
+        damage = int(damage)
+        if damage <= 0:
+            raise ValueError("Damage has to be positive")
+        self._health -= min(damage, self._health)
+        
+        # if has multiple heads and health drops to 0, will loose one head and regenerate full health
+        # if has one head left and health drop to 0, will loose last head
+        if self._health == 0 and self._heads > 1:
+            self._heads -= 1
+            self._health = self._base_health
+        elif self._health == 0 and self._heads == 1:
+            self._heads -= 1
+
+        return True
+
 class DragonHydra(Hydra):
     def take_damage(self, damage):
         if randint(0, 1):

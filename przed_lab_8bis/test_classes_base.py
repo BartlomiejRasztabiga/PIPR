@@ -308,6 +308,24 @@ def test_hydra_regenerate_health_above_base():
     hydra.regenerate(5)
     assert hydra.health() == 40
 
+def test_hydra_take_damage_two_heads():
+    hydra = Hydra('two-headed-hydra', 30, 2)
+    assert hydra.heads() == 2
+    assert hydra.base_health() == 30
+    assert hydra.health() == 30
+    hydra.take_damage(30)
+    assert hydra.health() == 30
+    assert hydra.heads() == 1
+
+def test_hydra_take_damage_one_head():
+    hydra = Hydra('regular-hydra', 30, 1)
+    assert hydra.heads() == 1
+    assert hydra.base_health() == 30
+    assert hydra.health() == 30
+    hydra.take_damage(30)
+    assert hydra.health() == 0
+    assert hydra.heads() == 0
+
 def test_dragonhydra_take_damage_hit(monkeypatch):
     def returnOne(f, t):
         return 1
