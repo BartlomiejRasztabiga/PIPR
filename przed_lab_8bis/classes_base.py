@@ -6,13 +6,16 @@ class NegativePowerError(Exception):
         super().__init__('Power cannot be negative')
         self.power = power
 
+
 class NameError(Exception):
     pass
+
 
 class NegativeHealthError(Exception):
     def __init__(self, health):
         super().__init__('Health cannot be negative')
         self.health = health
+
 
 class InvalidHeadCountError(Exception):
     def __init__(self, count):
@@ -29,18 +32,27 @@ class Player:
     :param power: player's power, defaults to 5
     :type power: int
     """
-    def __init__(self, name, power=5):
+
+    def __init__(self, name, power=5, health=100):
         self._name = name
         power = int(power)
         if power < 0:
             raise NegativePowerError(power)
         self._power = int(power)
 
+        health = int(health)
+        if health < 0:
+            raise NegativeHealthError(health)
+        self._health = int(health)
+
     def name(self):
         return self._name
 
     def power(self):
         return self._power
+
+    def health(self):
+        return self._health
 
     def set_name(self, new_name):
         if not new_name:
@@ -52,6 +64,11 @@ class Player:
             raise NegativePowerError(new_power)
         self._power = int(new_power)
 
+    def set_health(self, new_health):
+        if new_health < 0:
+            raise NegativeHealthError(new_health)
+        self._health = int(new_health)
+
     def info(self):
         """
         Returns basic description of the player
@@ -60,7 +77,7 @@ class Player:
         return f"My name is {self._name}. My current power is {self._power}."
 
     def attack(self, enemies):
-        if self._power == 0 or not enemies :
+        if self._power == 0 or not enemies:
             return (None, 0, False)
         # choose enemy from enemies
         enemy = choice(enemies)
@@ -70,6 +87,16 @@ class Player:
         took_hit = enemy.take_damage(damage)
         self.set_power(self._power - 1)
         return (enemy, damage, took_hit)
+
+    def take_damage(self, damage):
+        """
+        Reduces health of player by damage
+        """
+        damage = int(damage)
+        if damage <= 0:
+            raise ValueError("Damage has to be positive")
+        self._health -= min(damage, self._health)
+        return True
 
     def __str__(self):
         return self.info()
@@ -84,6 +111,7 @@ class Enemy:
     :param health: enemy's health
     :type health: int
     """
+
     def __init__(self, name, health):
         if not name:
             raise NameError("Name cannot be empty")
@@ -174,7 +202,7 @@ class Hydra(Enemy):
         if damage <= 0:
             raise ValueError("Damage has to be positive")
         self._health -= min(damage, self._health)
-        
+
         # if has multiple heads and health drops to 0, will loose one head and regenerate full health
         # if has one head left and health drop to 0, will loose last head
         if self._health == 0 and self._heads > 1:
@@ -185,11 +213,13 @@ class Hydra(Enemy):
 
         return True
 
+
 class DragonHydra(Hydra):
     def take_damage(self, damage):
         if randint(0, 1):
-          return super().take_damage(damage)
+            return super().take_damage(damage)
         return False
+
 
 class Game:
     def __init__(self, player, enemies=None):
