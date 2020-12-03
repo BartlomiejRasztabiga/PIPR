@@ -344,6 +344,30 @@ def test_dragonhydra_take_damage_miss(monkeypatch):
     assert not enemy.take_damage(10)
     assert enemy.health() == 40
 
+def test_dragonhydra_take_damage_two_heads(monkeypatch):
+    def returnOne(f, t):
+        return 1
+    monkeypatch.setattr('classes_base.randint', returnOne)
+    hydra = DragonHydra('two-headed-dragonhydra', 30, 2)
+    assert hydra.heads() == 2
+    assert hydra.base_health() == 30
+    assert hydra.health() == 30
+    hydra.take_damage(30)
+    assert hydra.health() == 30
+    assert hydra.heads() == 1
+
+def test_dragonhydra_take_damage_one_head(monkeypatch):
+    def returnOne(f, t):
+        return 1
+    monkeypatch.setattr('classes_base.randint', returnOne)
+    hydra = DragonHydra('regular-dragonhydra', 30, 1)
+    assert hydra.heads() == 1
+    assert hydra.base_health() == 30
+    assert hydra.health() == 30
+    hydra.take_damage(30)
+    assert hydra.health() == 0
+    assert hydra.heads() == 0
+
 def test_game_create():
     player = Player('Jurek Ogórek')
     enemies = [
