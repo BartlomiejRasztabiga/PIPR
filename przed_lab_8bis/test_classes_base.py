@@ -180,7 +180,7 @@ def test_attack_create_negative_power():
 
 def test_enemy_create():
     enemy = Enemy('orc', 50)
-    assert enemy.name() == 'orc'
+    assert enemy.name() == 'Orc'
     assert enemy.health() == 50
 
 
@@ -196,9 +196,9 @@ def test_enemy_create_empty_name():
 
 def test_enemy_set_name():
     enemy = Enemy('orc', 50)
-    assert enemy.name() == 'orc'
+    assert enemy.name() == 'Orc'
     enemy.set_name('dragon')
-    assert enemy.name() == 'dragon'
+    assert enemy.name() == 'Dragon'
 
 
 def test_enemy_set_name_empty():
@@ -217,13 +217,13 @@ def test_enemy_set_health():
 def test_enemy_set_health_negative():
     enemy = Enemy('orc', 50)
     assert enemy.health() == 50
-    enemy.set_health(-10)
-    assert enemy.health() == 0
+    with pytest.raises(NegativeHealthError):
+        enemy.set_health(-10)
 
 
 def test_enemy_description():
     enemy = Enemy('orc', 40)
-    assert str(enemy) == 'This is orc. It has 40 health points left.'
+    assert str(enemy) == 'This is Orc. It has 40 health points left.'
 
 
 def test_enemy_take_damage():
@@ -275,7 +275,7 @@ def test_hydra_create_defult_heads():
 
 def test_hydra_description():
     hydra = Hydra('two-headed-hydra', 30, 2)
-    assert str(hydra) == 'This is two-headed-hydra. It has 30 health points left. It has 2 heads.'
+    assert str(hydra) == 'This is Two-Headed-Hydra. It has 30 health points left. It has 2 heads.'
 
 def test_hydra_regenerate():
     hydra = Hydra('two-headed-hydra', 30, 2)

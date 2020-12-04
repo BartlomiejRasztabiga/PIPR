@@ -23,7 +23,40 @@ class InvalidHeadCountError(Exception):
         self.head_count = count
 
 
-class Player:
+class Character:
+    def __init__(self, name, health):
+        self.set_name(name)
+
+        self.set_health(health)
+
+    def name(self):
+        return self._name
+
+    def health(self):
+        return self._health
+
+    def set_name(self, new_name):
+        if not new_name:
+            raise NameError("Name cannot be empty")
+        self._name = str(new_name).title()
+
+    def set_health(self, new_health):
+        if new_health < 0:
+            raise NegativeHealthError(new_health)
+        self._health = int(new_health)
+
+    def take_damage(self, damage):
+        """
+        Reduces health of player by damage
+        """
+        damage = int(damage)
+        if damage <= 0:
+            raise ValueError("Damage has to be positive")
+        self._health -= min(damage, self._health)
+        return True
+
+
+class Player(Character):
     """
     Class Player. Contains attributes:
     :param name: player's name
@@ -34,40 +67,20 @@ class Player:
     """
 
     def __init__(self, name, power=5, health=100):
-        self._name = name
+        super().__init__(name, health)
+
         power = int(power)
         if power < 0:
             raise NegativePowerError(power)
         self._power = int(power)
 
-        health = int(health)
-        if health < 0:
-            raise NegativeHealthError(health)
-        self._health = int(health)
-
-    def name(self):
-        return self._name
-
     def power(self):
         return self._power
-
-    def health(self):
-        return self._health
-
-    def set_name(self, new_name):
-        if not new_name:
-            raise NameError("Name cannot be empty")
-        self._name = str(new_name).title()
 
     def set_power(self, new_power):
         if new_power < 0:
             raise NegativePowerError(new_power)
         self._power = int(new_power)
-
-    def set_health(self, new_health):
-        if new_health < 0:
-            raise NegativeHealthError(new_health)
-        self._health = int(new_health)
 
     def info(self):
         """
@@ -88,21 +101,11 @@ class Player:
         self.set_power(self._power - 1)
         return (enemy, damage, took_hit)
 
-    def take_damage(self, damage):
-        """
-        Reduces health of player by damage
-        """
-        damage = int(damage)
-        if damage <= 0:
-            raise ValueError("Damage has to be positive")
-        self._health -= min(damage, self._health)
-        return True
-
     def __str__(self):
         return self.info()
 
 
-class Enemy:
+class Enemy(Character):
     """
     Class Enemy. Contains attributes:
     :param name: enemy's name
@@ -113,54 +116,12 @@ class Enemy:
     """
 
     def __init__(self, name, health):
-        if not name:
-            raise NameError("Name cannot be empty")
-        health = int(health)
-        if health < 0:
-            raise NegativeHealthError("Health cannot be negative")
-        self._name = name
-        self._health = health
-
-    def name(self):
-        """
-        Returns name of the enemy.
-        """
-        return self._name
-
-    def health(self):
-        """
-        Returns health of the enemy.
-        """
-        return self._health
-
-    def set_name(self, new_name):
-        """
-        Sets name of enemy to new_name.
-        """
-        if not new_name:
-            raise NameError("Name cannot be empty")
-        self._name = new_name
-
-    def set_health(self, new_health):
-        """
-        Sets health of enemy to new_health.
-        """
-        self._health = max(0, new_health)
+        super().__init__(name, health)
 
     def __str__(self):
         name = self._name
         health = self._health
         return f'This is {name}. It has {health} health points left.'
-
-    def take_damage(self, damage):
-        """
-        Reduces health of enemy by damage
-        """
-        damage = int(damage)
-        if damage <= 0:
-            raise ValueError("Damage has to be positive")
-        self._health -= min(damage, self._health)
-        return True
 
     def is_alive(self):
         """
