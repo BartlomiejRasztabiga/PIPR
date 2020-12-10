@@ -42,6 +42,14 @@ class Amount:
         temp.amount += other.amount
         return temp
 
+    def __mul__(self, other):
+        if not isinstance(other, int):
+            raise ValueError('You can only multiply Amount by int')
+
+        temp = Amount(self.amount, self.unit_name)
+        temp.amount *= other
+        return temp
+
     def __eq__(self, other):
         return self.amount == other.amount and self.unit_name == other.unit_name
 
@@ -93,6 +101,15 @@ class Resource:
     def amount(self, amount):
         self._amount = amount
 
+    def __mul__(self, other):
+        return Resource(self.name, self.amount * other)
+
+    def __eq__(self, other):
+        return self.name == other.name and self.amount == self.amount
+
+    def __add__(self, other):
+        return Resource(self.name, self.amount + other.amount)
+
 
 class Warehouse:
     def __init__(self):
@@ -123,6 +140,22 @@ class Warehouse:
     def print_warehouse_report(self):
         print(os.linesep.join(self.get_warehouse_report()))
 
+    def get_resource_by_name(self, name):
+        for resource in self.resources:
+            if resource.name == name:
+                return resource
+        return None
+
+    def are_enough_resources(self, requirements: List[Resource]):
+        enough = True
+        for requirement in requirements:
+            resource = self.get_resource_by_name(requirement.name)
+            own_amount_in_ml = resource.amount.convert_to('ml', persist=False)
+            other_amount_in_ml = requirement.amount.convert_to('ml', persist=False)
+            if other_amount_in_ml.amount > own_amount_in_ml.amount:
+                enough = False
+        return enough
+
 
 class Product:
     def __init__(self, name, requirements: List[Resource]):
@@ -146,9 +179,76 @@ class Product:
         self._requirements = requirements
 
 
-if __name__ == "__main__":
-    warehouse = Warehouse()
-    warehouse.add_resource(Resource('gliceryna', Amount(20, 'l')))
-    warehouse.add_resource(Resource('aloes', Amount(15, 'l')))
-    warehouse.add_resource(Resource('alkohol', Amount(1500, 'ml')))
-    warehouse.print_warehouse_report()
+class OrderEntry:
+    def __init__(self, product: Product, amount: int):
+        self.product = product
+        self.amount = amount
+
+    @property
+    def product(self):
+        return self._product
+
+    @product.setter
+    def product(self, product):
+        self._product = product
+
+    @property
+    def amount(self):
+        return self._amount
+
+    @amount.setter
+    def amount(self, amount):
+        self._amount = amount
+
+
+class Order:
+    def __init__(self, entries: List[OrderEntry]):
+        self.entries = entries
+
+    @property
+    def entries(self):
+        return self._entries
+
+    @entries.setter
+    def entries(self, entries):
+        self._entries = entries
+
+    def get_required_resources(self):
+        requirements = []
+        for entry in self.entries:
+            amount = entry.amount
+            product = entry.product
+            product_requirements = product.requirements
+            for requirement in product_requirements:
+                order_requirement = requirement * amount
+                requirements.append(order_requirement)
+
+        # Here be dragons
+        new_requirements = []
+        added_requirements_names = set()
+        for requirement in requirements:
+            if requirement.name not in added_requirements_names:
+                new_requirements.append(requirement)
+                added_requirements_names.add(requirement.name)
+            else:
+                for _requirement in new_requirements:
+                    if _requirement.name == requirement.name:
+                        _requirement.amount += requirement.amount
+
+        return new_requirements
+
+
+class Factory:
+    def __init__(self):
+        self.products = []
+
+    def add_product(self, product: Product):
+        self.products.append(product)
+
+    @property
+    def products(self):
+        return self._products
+
+    @products.setter
+    def products(self, products):
+        self._products = products

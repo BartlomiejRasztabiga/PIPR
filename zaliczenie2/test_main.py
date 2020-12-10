@@ -1,6 +1,27 @@
 import pytest
 
-from main import Amount, UnknownUnitException, Warehouse, Resource, Product
+from main import Amount, UnknownUnitException, Warehouse, Resource, Product, Order, OrderEntry, Factory
+
+
+def _create_sample_factory():
+    factory = Factory()
+    factory.add_product(Product('aloesowy żel do dezynfekcji rąk', [
+        Resource('alkohol', Amount(600, 'ml')),
+        Resource('gliceryna', Amount(150, 'ml')),
+        Resource('aloes', Amount(350, 'ml')),
+    ]))
+    factory.add_product(Product('płyn do dezynfekcji rąk', [
+        Resource('alkohol', Amount(720, 'ml')),
+        Resource('gliceryna', Amount(30, 'ml')),
+    ]))
+    factory.add_product(Product('płyn do dezynfekcji powierzchni', [
+        Resource('alkohol', Amount(800, 'ml')),
+        Resource('gliceryna', Amount(5, 'ml')),
+    ]))
+    factory.add_product(Product('maseczka', [
+        Resource('konserwant', Amount(50, 'ml')),
+    ]))
+    return factory
 
 
 def test_wrong_unit():
@@ -23,6 +44,14 @@ def test_add_amounts_different_names():
     amount2 = Amount(2000, 'l')
     with pytest.raises(ValueError):
         amount1 + amount2
+
+
+def test_multiply_amounts():
+    amount = Amount(500, 'ml')
+    new_amount = amount * 3
+
+    assert new_amount.amount == 1500
+    assert new_amount.unit_name == 'ml'
 
 
 def test_conversion_to_l():
@@ -83,6 +112,14 @@ def test_add_to_warehouse_duplicate():
     assert warehouse.resources[0].amount == Amount(35, 'l')
 
 
+def test_multiply_resource():
+    resource = Resource('gliceryna', Amount(20, 'l'))
+    new_resource = resource * 3
+
+    assert new_resource.name == 'gliceryna'
+    assert new_resource.amount == Amount(60, 'l')
+
+
 def test_create_product_with_requirements():
     requirements = [
         Resource('alkohol', Amount(600, 'ml')),
@@ -102,4 +139,54 @@ def test_get_warehouse_report():
     report = warehouse.get_warehouse_report()
 
     assert report
-    print(report)
+    assert len(report) == 5
+    assert report[2] == '| gliceryna  |                    20 |'
+
+
+def test_order_get_required_resources_for_one_product():
+    factory = _create_sample_factory()
+
+    order = Order([
+        OrderEntry(factory.products[0], 1),
+        OrderEntry(factory.products[1], 1),
+    ])
+
+    assert order.get_required_resources() == [
+        Resource('alkohol', Amount(1320, 'ml')),
+        Resource('gliceryna', Amount(130, 'ml')),
+        Resource('aloes', Amount(350, 'ml')),
+    ]
+
+
+def test_warehouse_are_enough_resources_for_order():
+    warehouse = Warehouse()
+    warehouse.add_resource(Resource('alkohol', Amount(2, 'l')))
+    warehouse.add_resource(Resource('gliceryna', Amount(20, 'l')))
+    warehouse.add_resource(Resource('aloes', Amount(15, 'l')))
+
+    factory = _create_sample_factory()
+
+    order = Order([
+        OrderEntry(factory.products[0], 1),
+        OrderEntry(factory.products[1], 1),
+    ])
+
+    requirements = order.get_required_resources()
+    assert warehouse.are_enough_resources(requirements)
+
+
+def test_warehouse_are_not_enough_resources_for_order():
+    warehouse = Warehouse()
+    warehouse.add_resource(Resource('alkohol', Amount(1, 'l')))
+    warehouse.add_resource(Resource('gliceryna', Amount(20, 'l')))
+    warehouse.add_resource(Resource('aloes', Amount(15, 'l')))
+
+    factory = _create_sample_factory()
+
+    order = Order([
+        OrderEntry(factory.products[0], 1),
+        OrderEntry(factory.products[1], 1),
+    ])
+
+    requirements = order.get_required_resources()
+    assert warehouse.are_enough_resources(requirements) is False
